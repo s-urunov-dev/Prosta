@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block context %}
+	<main class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Mahsulotni o'chirish</h2>
+                <a href="{% url 'product-detail-page' product.pk %}" class="btn btn-secondary">← Orqaga qaytish</a>
+            </div>
+
+            <div class="alert alert-danger">
+                <strong>Diqqat!</strong> Bu amal qaytarib bo'lmaydi. Mahsulot butunlay o'chiriladi.
+            </div>
+
+            <!-- Mahsulot ma'lumotlari -->
+            <div style="background: #f8f9fa; padding: 2rem; border-radius: 8px; margin-bottom: 2rem;">
+                <div style="display: grid; grid-template-columns: auto 1fr; gap: 2rem; align-items: center;">
+                    <img style="width: 120px; height: 120px; background: #ecf0f1; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 3rem;" src="{{ product.image.url }}" alt="">
+
+                    <div>
+                        <h3 style="color: #2c3e50; margin-bottom: 0.5rem;">{{ product.name }}</h3>
+                        <p style="color: #7f8c8d; margin-bottom: 1rem;">{{ product.description }}</p>
+
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                            <div>
+                                <strong>Narxi:</strong> {{ product.price }}
+                            </div>
+                            <div>
+                                <strong>Kategoriya:</strong> {{ product.category.name }}
+                            </div>
+                            <div>
+                                <strong>Holati:</strong> {% if product.count %}
+                                	<span style="color: #27ae60;">Mavjud </span>
+                                {% else %}
+                                    <span style="color: #d8519f;">Tugagan </span>
+                                {% endif %}
+                            </div>
+                            <div>
+                                <strong>Omborda:</strong> {{ product.count }} dona
+                            </div>
+                            <div>
+                                <strong>ID:</strong> {{ product.pk }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ogohlantirish -->
+            <div class="alert alert-warning">
+                <h4 style="margin-bottom: 1rem;">Bu mahsulotni o'chirishdan oldin e'tibor bering:</h4>
+                <ul style="margin-left: 1.5rem; margin-bottom: 0;">
+                    <li>Barcha mahsulot ma'lumotlari yo'qoladi</li>
+                    <li>Bog'liq bo'lgan buyurtmalar ta'sirlanishi mumkin</li>
+                    <li>Statistika va hisobotlarda bu mahsulot ko'rinmaydi</li>
+                    <li>Bu amal qaytarib bo'lmaydi</li>
+                </ul>
+            </div>
+
+            <!-- Tasdiqlash -->
+            <div style="background: white; border: 2px solid #e74c3c; border-radius: 8px; padding: 2rem; margin-bottom: 2rem;">
+                <h4 style="color: #e74c3c; margin-bottom: 1rem;">O'chirishni tasdiqlash</h4>
+{#                <p style="margin-bottom: 1.5rem;">#}
+{#                    Mahsulotni o'chirishni tasdiqlash uchun quyidagi matnni kiriting:#}
+{#                    <strong style="background: #f8f9fa; padding: 0.25rem 0.5rem; border-radius: 4px;">DELETE {{ product.name }}</strong>#}
+{#                </p>#}
+
+                <form action="{% url 'product-delete-page' product.pk %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="id" value="{{ product.pk }}">
+{#                    <input type="hidden" name="action" value="delete">#}
+{##}
+{#                    <div class="form-group">#}
+{#                        <label for="confirmation" class="form-label">Tasdiqlash matni</label>#}
+{#                        <input type="text" id="confirmation" name="confirmation" class="form-control" placeholder="DELETE {{ product.name}}" required>#}
+{#                    </div>#}
+{##}
+{#                    <div class="form-group">#}
+{#                        <label for="reason" class="form-label">O'chirish sababi (ixtiyoriy)</label>#}
+{#                        <textarea id="reason" name="reason" class="form-control textarea" placeholder="Mahsulotni nima uchun o'chiryapsiz?"></textarea>#}
+{#                    </div>#}
+
+                    <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                        <button type="submit" class="btn btn-danger">Ha, o'chirish</button>
+                        <a href="{% url 'product-detail-page' product.pk %}" class="btn btn-secondary">Yo'q, bekor qilish</a>
+                        <a href="{% url 'index-page' %}" class="btn btn-secondary">Ro'yxatga qaytish</a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Alternativ variantlar -->
+            <div style="background: #e8f5e8; border: 1px solid #27ae60; border-radius: 8px; padding: 1.5rem;">
+                <h4 style="color: #27ae60; margin-bottom: 1rem;">Alternativ variantlar</h4>
+                <p style="margin-bottom: 1rem;">O'chirish o'rniga quyidagi amallarni bajarishingiz mumkin:</p>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <a href="{% url 'product-update' product.pk %}" class="btn btn-warning">Mahsulotni tahrirlash</a>
+                    <form action="{% url 'mark-out-of-stock' product.pk %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-secondary">Holatini "Tugagan" qilish</button>
+                    </form>
+                    <form action="{% url 'archive-product' product.pk %}" method="POST">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-secondary">Arxivga o'tkazish</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

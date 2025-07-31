@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block context %}
+    <main class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Barcha mahsulotlar</h2>
+                <a href="{% url 'create-page' %}" class="btn btn-primary">+ Yangi mahsulot qo'shish</a>
+            </div>
+
+            <!-- Table view -->
+            <div style="margin-bottom: 2rem;">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nomi</th>
+                        <th>Narxi</th>
+                        <th>Kategoriya</th>
+                        <th>Holati</th>
+                        <th>Amallar</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for product in products %}
+                        <tr>
+                            <td>{{ product.id }}</td>
+                            <td>{{ product.name }}</td>
+                            <td>${{ product.price }}</td>
+                            <td>{{ product.category.name }}</td>
+                            <td>{% if product.count %}
+                                Mavjud
+                            {% else %}
+                                Tugagan
+                            {% endif %} </td>
+                            <td>
+                                <a href="{% url 'product-detail-page' product.pk %}" class="btn btn-primary">Ko'rish</a>
+                                <a href="{% url 'product-update' product.pk %}" class="btn btn-warning">Tahrirlash</a>
+                                <a href="{% url 'product-delete-page' product.pk %}" class="btn btn-danger">O'chirish</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Grid view -->
+            <h3 style="margin-bottom: 1rem; color: #2c3e50;">Grid ko'rinishi</h3>
+            <div class="product-grid">
+                {% for product in products %}
+                    <div class="product-card">
+                        <img class="product-image" src="{{ product.image.url }}" alt="">
+                        <div class="product-info">
+                            <h3 class="product-title">{{ product.name }}</h3>
+                            <div class="product-price">${{ product.price }}</div>
+                            <p class="product-description">{{ product.description|slice:199 }}</p>
+                            <div class="product-actions">
+                                <a href="{% url 'product-detail-page' product.pk %}" class="btn btn-primary">Ko'rish</a>
+                                <a href="{% url 'product-update' product.pk %}" class="btn btn-warning">Tahrirlash</a>
+                                <a href="{% url 'product-delete-page' product.pk %}" class="btn btn-danger">O'chirish</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </main>
+{% endblock %}

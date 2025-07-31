@@ -1,0 +1,31 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahsulotlar ro'yxati - CRUD Template</title>
+    <link rel="stylesheet" href="{% static 'apps/css/main.css' %}">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>Mahsulotlar boshqaruvi</h1>
+        </div>
+        <nav class="nav">
+            <div class="container">
+                <ul>
+                    <li><a href="{% url 'index-page' %}">Bosh sahifa</a></li>
+                    <li><a href="{% url 'create-page' %}">Yangi mahsulot</a></li>
+                    <li><a href="{% url 'archived-products-page' %}">Arxivlangan Mahsulotlar</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    {% block context %}
+
+    {% endblock %}
+</body>
+</html>

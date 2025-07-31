@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block context %}
+<main class="container">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Yangi mahsulot qo'shish</h2>
+            <a href="{% url 'index-page' %}" class="btn btn-secondary">← Orqaga qaytish</a>
+        </div>
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                <button type="submit" class="btn btn-success">Saqlash</button>
+                <button type="reset" class="btn btn-secondary">Tozalash</button>
+                <a href="#" class="btn btn-secondary">Bekor qilish</a>
+            </div>
+        </form>
+    </div>
+</main>
+{% endblock %}

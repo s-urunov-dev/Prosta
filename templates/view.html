@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block context %}
+    <main class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Mahsulot ma'lumotlari</h2>
+                <div>
+                    <a href="{% url 'index-page' %}" class="btn btn-secondary">← Orqaga</a>
+                    <a href="{% url 'product-update' product.pk %}" class="btn btn-warning">Tahrirlash</a>
+                    <a href="{% url 'product-delete-page' product.pk %}" class="btn btn-danger">O'chirish</a>
+                </div>
+            </div>
+
+            <div class="detail-grid">
+                <div>
+                    <img class="detail-image" src="{{ product.image.url }}" alt="">
+                </div>
+
+                <div class="detail-info">
+                    <h2>{{ product.name }}</h2>
+                    <div class="detail-price">${{ product.price }}</div>
+                    <p class="detail-description">
+                        {{ product.description }}
+                    </p>
+
+                    <div class="detail-meta">
+                        <div class="meta-item">
+                            <span class="meta-label">ID:</span>
+                            <span>{{ product.pk }}</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Kategoriya:</span>
+                            <span>{{ product.category.name }}</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Holati:</span>
+                            {% if product.count %}
+                                <span style="color: #27ae60; font-weight: bold;">Mavjud</span>
+                            {% else %}
+                                <span style="color: #d8519f; font-weight: bold;">Tugagan</span>
+
+                            {% endif %}
+                        </div>
+                        {#                        <div class="meta-item">#}
+                        {#                            <span class="meta-label">Ombordagi miqdori:</span>#}
+                        {#                            <span>{{ product.count }} dona</span>#}
+                        {#                        </div>#}
+                        {#                        <div class="meta-item">#}
+                        {#                            <span class="meta-label">Og'irligi:</span>#}
+                        {#                            <span>0.187 kg</span>#}
+                        {#                        </div>#}
+                        {#                        <div class="meta-item">#}
+                        {#                            <span class="meta-label">O'lchamlari:</span>#}
+                        {#                            <span>146.6 x 70.6 x 8.25 mm</span>#}
+                        {#                        </div>#}
+                        {#                        <div class="meta-item">#}
+                        {#                            <span class="meta-label">Kafolat:</span>#}
+                        {#                            <span>12 oy</span>#}
+                        {#                        </div>#}
+                        <div class="meta-item">
+                            <span class="meta-label">Qo'shilgan sana:</span>
+                            {#                            <span>2024-01-15</span>#}
+                            <span>{{ product.created_at|date:"Y-m-d" }}</span>
+                        </div>
+                        <div class="meta-item">
+                            <span class="meta-label">Oxirgi yangilanish:</span>
+                            <span>{{ product.updated_at|date:"Y-m-d" }}</span>
+                        </div>
+                    </div>
+
+                    {#                    <div style="margin-bottom: 1.5rem;">#}
+                    {#                        <h4 style="color: #2c3e50; margin-bottom: 0.5rem;">Teglar:</h4>#}
+                    {#                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">#}
+                    {#                            <span style="background: #3498db; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.875rem;">smartphone</span>#}
+                    {#                            <span style="background: #3498db; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.875rem;">apple</span>#}
+                    {#                            <span style="background: #3498db; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.875rem;">premium</span>#}
+                    {#                            <span style="background: #3498db; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.875rem;">camera</span>#}
+                    {#                        </div>#}
+                    {#                    </div>#}
+
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                        <a href="{% url 'product-update' product.pk %}" class="btn btn-warning">Tahrirlash</a>
+                        <a href="{% url 'product-delete-page' product.pk %}" class="btn btn-danger">O'chirish</a>
+                        <a href="{% url 'index-page' %}" class="btn btn-secondary">Ro'yxatga qaytish</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Qo'shimcha ma'lumotlar -->
+        {#        <div class="card">#}
+        {#            <div class="card-header">#}
+        {#                <h3 class="card-title">Texnik xususiyatlari</h3>#}
+        {#            </div>#}
+        {##}
+        {#            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">#}
+        {#                <div>#}
+        {#                    <h4 style="color: #2c3e50; margin-bottom: 1rem;">Asosiy xususiyatlari</h4>#}
+        {#                    <ul style="list-style: none; padding: 0;">#}
+        {#                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">#}
+        {#                            <strong>Processor:</strong> A17 Pro chip#}
+        {#                        </li>#}
+        {#                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">#}
+        {#                            <strong>Xotira:</strong> 128GB / 256GB / 512GB / 1TB#}
+        {#                        </li>#}
+        {#                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">#}
+        {#                            <strong>RAM:</strong> 8GB#}
+        {#                        </li>#}
+        {#                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">#}
+        {#                            <strong>Ekran:</strong> 6.1" Super Retina XDR#}
+        {#                        </li>#}
+        {#                        <li style="padding: 0.5rem 0;">#}
+        {#                            <strong>Batareya:</strong> 3274 mAh#}
+        {#                        </li>#}
+        {#                    </ul>#}
+        {#                </div>#}
+        {##}
+        {#                <div>#}
+        {#                    <h4 style="color: #2c3e50; margin-bottom: 1rem;">Kamera</h4>#}
+        {#                    <ul style="list-style: none; padding: 0;">#}
+        {#                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">#}
+        {#                            <strong>Asosiy:</strong> 48MP f/1.78#}
+        {#                        </li>#}
+        {#                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">#}
+        {#                            <strong>Ultra Wide:</strong> 12MP f/2.2#}
+        {#                        </li>#}
+        {#                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">#}
+        {#                            <strong>Telephoto:</strong> 12MP f/2.8#}
+        {#                        </li>#}
+        {#                        <li style="padding: 0.5rem 0; border-bottom: 1px solid #eee;">#}
+        {#                            <strong>Old kamera:</strong> 12MP f/1.9#}
+        {#                        </li>#}
+        {#                        <li style="padding: 0.5rem 0;">#}
+        {#                            <strong>Video:</strong> 4K ProRes, Cinematic mode#}
+        {#                        </li>#}
+        {#                    </ul>#}
+        {#                </div>#}
+        {#            </div>#}
+        {#        </div>#}
+    </main>
+{% endblock %}

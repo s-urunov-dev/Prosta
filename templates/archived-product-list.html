@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block context %}
+    <main class="container">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">Barcha mahsulotlar</h2>
+                <a href="{% url 'create-page' %}" class="btn btn-primary">+ Yangi mahsulot qo'shish</a>
+            </div>
+
+            <!-- Table view -->
+            <div style="margin-bottom: 2rem;">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nomi</th>
+                        <th>Narxi</th>
+                        <th>Kategoriya</th>
+                        <th>Holati</th>
+                        <th>Amallar</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for product in products %}
+                        <tr>
+                            <td>{{ product.id }}</td>
+                            <td>{{ product.name }}</td>
+                            <td>${{ product.price }}</td>
+                            <td>{{ product.category.name }}</td>
+                            <td>{% if product.count %}
+                                Mavjud
+                            {% else %}
+                                Tugagan
+                            {% endif %} </td>
+                            <td>
+                                <form action="{% url 'archive-product' product.pk %}" method="POST">
+                                    {% csrf_token %}
+                                    <button class="btn btn-primary">Arxivdan Chiqarish</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+{% endblock %}
